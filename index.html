@@ -11,21 +11,26 @@
     <link href='core/main.css' rel='stylesheet'/>
     <link href='daygrid/main.css' rel='stylesheet'/>
 
-<!--    adicional-->
+    <!--    adicional-->
     <link href='list/main.css' rel='stylesheet'/>
     <link href='timegrid/main.css' rel='stylesheet'/>
 
-<!--    boostrap-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--    boostrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <style>
-        html,body
-        {
-            margin: 0;padding: 0;
+        html, body {
+            margin: 0;
+            padding: 0;
             font-family: Arial;
             font-size: 14px;
         }
-        #calendar{max-width: 1000px;margin: 40px auto;}
+
+        #calendar {
+            max-width: 1000px;
+            margin: 40px auto;
+        }
     </style>
 
     <script>
@@ -35,23 +40,52 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
 
-                defaultDate: new Date(2020,0,1),
+                defaultDate: new Date(2020, 0, 1),
                 plugins: ['dayGrid', 'interaction', 'timeGrid', 'list'],
 
                 header:
                     {
-                        left:'prev,next today Miboton',
-                        center:'title',
-                        right:'dayGridMonth,timeGridWeek,timeGridDay'
+                        left: 'prev,next today Miboton',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                    customButtons:{
-                     Miboton:{
-                         text:"Boton",
-                         click:function () {
-                             alert("hola")
-                         }
-                     }
+                customButtons: {
+                    Miboton: {
+                        text: "Boton",
+                        click: function () {
+                            $('#exampleModal').modal('toggle');
+                        }
                     }
+                },
+                dateClick: function (info) {
+                    $('#exampleModal').modal('toggle');
+                    console.log(info);
+                    calendar.addEvent({title:"Evento X", date:info.dateStr});
+                },
+                eventClick:function(info){
+
+                    console.log(info.event);
+                    console.log(info.event.title);
+                    console.log(info.event.start);
+
+                    console.log(info.event.end);
+                    console.log(info.event.textColor);
+                    console.log(info.event.backgroundColor);
+
+                    console.log(info.event.extendedProps.descripcion);
+                },
+                events: [
+                    {
+                        title: "Evento Uno",
+                        start: "2020-01-16 12:30:00",
+                        descripcion:"Descripcion Uno"
+                    }, {
+
+                        title: "Evento Dos",
+                        start: "2020-01-17 12:30:00",
+                        descripcion: "descripcion Dos"
+                    }
+                ]
 
             });
 
@@ -62,19 +96,54 @@
     </script>
 
     <script src='core/main.js'></script>
+    <script src='interaction/main.js'></script>
     <script src='daygrid/main.js'></script>
 
-<!--    adicional-->
+    <!--    adicional-->
     <script src='list/main.js'></script>
     <script src='timegrid/main.js'></script>
 
-<!--    boostrap-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--    boostrap-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
 </head>
 <body>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="calendar"></div>
 </body>
 </html>
